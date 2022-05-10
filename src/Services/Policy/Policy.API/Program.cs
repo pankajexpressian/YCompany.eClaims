@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Policy.API.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +16,9 @@ namespace Policy.API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            MigrateDatabase(host);
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +27,10 @@ namespace Policy.API
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private async static void MigrateDatabase(IHost host)
+        {
+            await PolicyDataSeeder.MigrateDatabases(host);
+        }
     }
 }

@@ -1,15 +1,20 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
+using Policy.API.Infrastructure.Data;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Policy.API.Application.Services;
+using Policy.API.Infrastructure.Services;
+using Policy.API.Infrastructure.Repositories;
 
 namespace Policy.API
 {
@@ -25,6 +30,16 @@ namespace Policy.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<PolicyContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("PolicyDbConnection"));
+            });
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddScoped<IPolicyService, PolicyService>();
+
+            services.AddScoped<IPolicyRepository, PolicyRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
