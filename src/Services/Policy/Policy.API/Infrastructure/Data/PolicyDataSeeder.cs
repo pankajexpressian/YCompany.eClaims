@@ -26,13 +26,14 @@ namespace Policy.API.Infrastructure.Data
                 {
                     await context.Database.MigrateAsync();
                     logger.LogInformation("Policy database has been created successfully and migrations have also been run.");
-
-                    await SeedPolicyData(context, logger);
                 }
                 catch (Exception ex)
                 {
                     logger.LogError("Error while migrating the databases.", ex);
                 }
+
+                await SeedPolicyData(context, logger);
+
             }
         }
 

@@ -51,10 +51,19 @@ namespace Policy.API.Infrastructure.Repositories
 
         public async Task<(bool, CustomerPolicy)> UpdatePolicy(CustomerPolicy customerPolicy)
         {
+            var existingPolicy = await _dbContext.Policies
+                .AsNoTracking()
+                .Where(p => p.PolicyNumber == customerPolicy.PolicyNumber)
+                //.Include(p => p.CreatedAt)
+                .FirstOrDefaultAsync();
+            
+            customerPolicy.CreatedAt = existingPolicy.CreatedAt;
+
             if (_dbContext.Entry(customerPolicy).State != EntityState.Modified)
             {
                 _dbContext.Entry(customerPolicy).State = EntityState.Modified;
             }
+
             var updated = await _dbContext.SaveChangesAsync();
             return (updated > 0, customerPolicy);
         }

@@ -1,20 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Policy.API.Infrastructure.Data;
-using AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Policy.API.Application.Services;
 using Policy.API.Infrastructure.Services;
 using Policy.API.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore.InMemory;
 
 namespace Policy.API
 {
@@ -32,7 +27,8 @@ namespace Policy.API
         {
             services.AddDbContext<PolicyContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("PolicyDbConnection"));
+                //options.UseSqlServer(Configuration.GetConnectionString("PolicyDbConnection"));
+                options.UseInMemoryDatabase(Configuration["ConnectionStrings:InMemoryPolicyDb"]);
             });
 
             services.AddAutoMapper(typeof(Startup));

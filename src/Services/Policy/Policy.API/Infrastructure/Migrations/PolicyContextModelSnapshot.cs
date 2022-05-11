@@ -26,14 +26,20 @@ namespace Policy.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ExpiresOn")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("ExpiresOn")
+                        .HasColumnType("datetimeoffset");
 
-                    b.Property<DateTime>("IssuedOn")
-                        .HasColumnType("datetime2");
+                    b.Property<bool>("IsSoftDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset>("IssuedOn")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("PolicyStatus")
                         .HasColumnType("int");
@@ -41,8 +47,11 @@ namespace Policy.API.Migrations
                     b.Property<int>("PolicyType")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartsOn")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("StartsOn")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("PolicyNumber");
 

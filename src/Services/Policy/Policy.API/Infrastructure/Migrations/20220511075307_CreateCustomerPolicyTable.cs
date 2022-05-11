@@ -14,11 +14,14 @@ namespace Policy.API.Migrations
                     PolicyNumber = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    IssuedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartsOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpiresOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IssuedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    StartsOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    ExpiresOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     PolicyType = table.Column<int>(type: "int", nullable: false),
-                    PolicyStatus = table.Column<int>(type: "int", nullable: false)
+                    PolicyStatus = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    IsSoftDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
