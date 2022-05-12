@@ -1,11 +1,7 @@
+using Customer.API.Inrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Customer.API
 {
@@ -13,7 +9,9 @@ namespace Customer.API
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            MigrateDatabase(host);
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +20,10 @@ namespace Customer.API
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private async static void MigrateDatabase(IHost host)
+        {
+            await CustomerDataSeeder.MigrateDatabases(host);
+        }
     }
 }
