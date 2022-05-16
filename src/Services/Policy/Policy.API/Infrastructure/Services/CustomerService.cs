@@ -19,7 +19,7 @@ namespace Policy.API.Infrastructure.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJson($"api/customers", customerSignupDto);
+                var response = await _httpClient.PostAsJson($"customers", customerSignupDto);
 
                 if (response.IsSuccessStatusCode)
                 { 

@@ -54,5 +54,9 @@
       "UpstreamPathTemplate": "/customers/{id}",
       "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
     }
-  ]
+
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5555"
+  }
 }
