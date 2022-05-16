@@ -67,8 +67,9 @@ namespace Policy.API.Infrastructure.Data
                 ExpiresOn = DateTime.Today.AddDays(365),
                 IssuedOn = DateTime.Today,
                 PolicyStatus = PolicyStatus.Active,
-                PolicyType = PolicyType.Auto
-            });
+                PolicyType = PolicyType.Auto,
+                SignedUpAlready = true
+            }); ;
 
 
             policies.Add(

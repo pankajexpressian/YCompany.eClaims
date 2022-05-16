@@ -71,6 +71,6 @@ namespace Customer.API.Controllers
         {
             var deleted=await _customerService.RemoveCustomer(id);
             return NoContent();
-        }
+        }        
     }
 }

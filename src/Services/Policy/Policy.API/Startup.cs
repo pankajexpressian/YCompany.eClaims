@@ -10,6 +10,7 @@ using Policy.API.Application.Services;
 using Policy.API.Infrastructure.Services;
 using Policy.API.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore.InMemory;
+using System;
 
 namespace Policy.API
 {
@@ -36,6 +37,11 @@ namespace Policy.API
             services.AddScoped<IPolicyService, PolicyService>();
 
             services.AddScoped<IPolicyRepository, PolicyRepository>();
+
+            services.AddHttpClient<ICustomerService, CustomerService>(c =>
+            {
+                c.BaseAddress = new Uri(Configuration["CustomerServiceUrl"]);
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

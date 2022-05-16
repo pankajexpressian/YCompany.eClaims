@@ -8,7 +8,10 @@ namespace Policy.API.Mappings
     {
         public CustomerPolicyMappings()
         {
-            CreateMap<CustomerPolicy, CustomerPolicyDto>().ReverseMap();
+            CreateMap<CustomerPolicy, CreatePolicyDto>().ReverseMap();
+            CreateMap<CustomerPolicy, UpdatePolicyDto>().ReverseMap();
+            CreateMap<CustomerPolicy, ReadPolicyDto>().ReverseMap();
+            CreateMap<CustomerPolicy, CustomerSignupDto>().ReverseMap();
         }
     }
 }

@@ -11,17 +11,19 @@ namespace Policy.API.Infrastructure.Services
     public class PolicyService : IPolicyService
     {
         private readonly IPolicyRepository _policyRepository;
+        private readonly ICustomerService _customerService;
         private readonly IMapper _mapper;
-        public PolicyService(IPolicyRepository policyRepository, IMapper mapper)
+        public PolicyService(IPolicyRepository policyRepository, IMapper mapper, ICustomerService customerService)
         {
             _policyRepository = policyRepository;
             _mapper = mapper;
+            _customerService = customerService;
         }
-        public async Task<CustomerPolicyDto> AddPolicy(CustomerPolicyDto customerPolicy)
+        public async Task<ReadPolicyDto> AddPolicy(CreatePolicyDto createPolicyDto)
         {
-            var policyToAdd = _mapper.Map<CustomerPolicy>(customerPolicy);
+            var policyToAdd = _mapper.Map<CustomerPolicy>(createPolicyDto);
             var newlyAddedPolicy = await _policyRepository.AddPolicy(policyToAdd);
-            return _mapper.Map<CustomerPolicyDto>(newlyAddedPolicy);
+            return _mapper.Map<ReadPolicyDto>(newlyAddedPolicy);
         }
 
         public async Task<bool> DoesPolicyExists(int policyId)
@@ -29,17 +31,17 @@ namespace Policy.API.Infrastructure.Services
             return await _policyRepository.DoesPolicyExists(policyId);
         }
 
-        public async Task<IEnumerable<CustomerPolicyDto>> GetPolicies()
+        public async Task<IEnumerable<ReadPolicyDto>> GetPolicies()
         {
             var policies = await _policyRepository.GetPolicies();
-            var policiesToReturn = _mapper.Map<IEnumerable<CustomerPolicyDto>>(policies);
+            var policiesToReturn = _mapper.Map<IEnumerable<ReadPolicyDto>>(policies);
             return policiesToReturn;
         }
 
-        public async Task<CustomerPolicyDto> GetPolicy(int policyId)
+        public async Task<ReadPolicyDto> GetPolicy(int policyId)
         {
             var policy = await _policyRepository.GetPolicy(policyId);
-            var policyToReturn = _mapper.Map<CustomerPolicyDto>(policy);
+            var policyToReturn = _mapper.Map<ReadPolicyDto>(policy);
             return policyToReturn;
         }
 
@@ -48,11 +50,31 @@ namespace Policy.API.Infrastructure.Services
             return _policyRepository.RemovePolicy(policyId);
         }
 
-        public async Task<(bool, CustomerPolicyDto)> UpdatePolicy(CustomerPolicyDto customerPolicy)
+
+        public async Task<(bool, ReadPolicyDto)> UpdatePolicy(UpdatePolicyDto UpdatePolicyDto)
         {
-            var policyToUpdate = _mapper.Map<CustomerPolicy>(customerPolicy);
+            var policyToUpdate = _mapper.Map<CustomerPolicy>(UpdatePolicyDto);
             var updatedPolicy = await _policyRepository.UpdatePolicy(policyToUpdate);
-            return (updatedPolicy.Item1, _mapper.Map<CustomerPolicyDto>(updatedPolicy.Item2));
+            return (updatedPolicy.Item1, _mapper.Map<ReadPolicyDto>(updatedPolicy.Item2));
+        }
+        public async Task<(bool, CustomerSignupDto)> SignupCustomer(CustomerSignupDto customerSignupDto)
+        {
+            var signedupCustomer = await _customerService.Signup(customerSignupDto);
+
+            if (signedupCustomer.CustomerId > 0)
+            {
+                var customerPolicy = _mapper.Map<CustomerPolicy>(signedupCustomer);
+                
+                var updatedPolicySignupDetails = await _policyRepository.UpdatePolicySignupDetails(customerPolicy);
+
+                if (updatedPolicySignupDetails.Item1)
+                {
+                    return (true, signedupCustomer);
+                }
+            }
+
+            return (false, customerSignupDto);
+
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Policy.API.Application.Dto;
 using Policy.API.Domain.Entities;
 using Policy.API.Infrastructure.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,7 +58,7 @@ namespace Policy.API.Infrastructure.Repositories
                 .Where(p => p.PolicyNumber == customerPolicy.PolicyNumber)
                 //.Include(p => p.CreatedAt)
                 .FirstOrDefaultAsync();
-            
+
             customerPolicy.CreatedAt = existingPolicy.CreatedAt;
 
             if (_dbContext.Entry(customerPolicy).State != EntityState.Modified)
@@ -65,7 +67,40 @@ namespace Policy.API.Infrastructure.Repositories
             }
 
             var updated = await _dbContext.SaveChangesAsync();
+
             return (updated > 0, customerPolicy);
+        }
+
+
+        public async Task<(bool, CustomerPolicy)> UpdatePolicySignupDetails(CustomerPolicy customerPolicy)
+        {
+            var existingPolicy = await _dbContext.Policies
+                .Where(p => p.PolicyNumber == customerPolicy.PolicyNumber)
+                .FirstOrDefaultAsync();
+
+            if (existingPolicy == null)
+            {
+                return (false, existingPolicy);
+            }
+
+            if (!existingPolicy.SignedUpAlready && !(existingPolicy.CustomerId > 0))
+            {
+                //existingPolicy.CreatedAt = existingPolicy.CreatedAt;
+                existingPolicy.CustomerId = customerPolicy.CustomerId;
+                existingPolicy.SignedUpAlready = customerPolicy.SignedUpAlready;
+                existingPolicy.DOB = customerPolicy.DOB;
+
+                if (_dbContext.Entry(existingPolicy).State != EntityState.Modified)
+                {
+                    _dbContext.Entry(existingPolicy).State = EntityState.Modified;
+                }
+
+                var updated = await _dbContext.SaveChangesAsync();
+
+                return (true, existingPolicy);
+            }
+
+            return (false, existingPolicy);
         }
     }
 }

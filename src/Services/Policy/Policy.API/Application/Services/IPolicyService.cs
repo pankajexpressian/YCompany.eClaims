@@ -7,11 +7,12 @@ namespace Policy.API.Application.Services
 {
     public interface IPolicyService
     {
-        Task<IEnumerable<CustomerPolicyDto>> GetPolicies();
-        Task<CustomerPolicyDto> GetPolicy(int policyId);
-        Task<(bool, CustomerPolicyDto)> UpdatePolicy(CustomerPolicyDto customerPolicy);
+        Task<IEnumerable<ReadPolicyDto>> GetPolicies();
+        Task<ReadPolicyDto> GetPolicy(int policyId);
+        Task<(bool, ReadPolicyDto)> UpdatePolicy(UpdatePolicyDto updatePolicyDto);
         Task<bool> DoesPolicyExists(int policyId);
-        Task<CustomerPolicyDto> AddPolicy(CustomerPolicyDto customerPolicy);
+        Task<ReadPolicyDto> AddPolicy(CreatePolicyDto createPolicyDto);
         Task<bool> RemovePolicy(int policyId);
+        Task<(bool, CustomerSignupDto)> SignupCustomer(CustomerSignupDto customerSignupDto);
     }
 }

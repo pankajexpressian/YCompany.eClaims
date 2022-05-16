@@ -1,4 +1,5 @@
 ﻿using Policy.API.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,5 +13,7 @@ namespace Policy.API.Infrastructure.Repositories
         Task<bool> DoesPolicyExists(int policyId);
         Task<CustomerPolicy> AddPolicy(CustomerPolicy customerPolicy);
         Task<bool> RemovePolicy(int policyId);
+
+        Task<(bool, CustomerPolicy)> UpdatePolicySignupDetails(CustomerPolicy customerPolicy);
     }
 }
