@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Domain\Exceptions\" />
+    <Folder Include="Middlewares\" />
   </ItemGroup>
 
 </Project>

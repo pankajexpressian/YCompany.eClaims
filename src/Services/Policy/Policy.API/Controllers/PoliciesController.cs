@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Policy.API.Application.Dto;
 using Policy.API.Application.Services;
+using Policy.API.Crosscutting.Filters;
 using Policy.API.Domain.Entities;
 using Policy.API.Infrastructure.Data;
 
@@ -16,6 +17,7 @@ namespace Policy.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ExceptionHandlingFilter]
     public class PoliciesController : ControllerBase
     {
         private readonly IPolicyService _policyService;
