@@ -53,6 +53,31 @@
       ],
       "UpstreamPathTemplate": "/customers/{id}",
       "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
+    },
+    //Notification Service
+    {
+      "DownstreamPathTemplate": "/api/notifications/email",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5003"
+        }
+      ],
+      "UpstreamPathTemplate": "/notifications/email",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/notifications/sms",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5003"
+        }
+      ],
+      "UpstreamPathTemplate": "/notifications/sms",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     }
 
   ],
