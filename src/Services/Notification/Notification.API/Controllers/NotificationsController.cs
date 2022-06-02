@@ -23,6 +23,12 @@ namespace Notification.API.Controllers
         }
 
         [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("This is notifications service");
+        }
+
+        [HttpGet]
         [Route("sms")]
         public async Task<IActionResult> GetSMS()
         {
