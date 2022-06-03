@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Claim.Application.Features.AddClaim;
+using Claim.Application.Features.GetClaim;
 using Claim.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,11 @@ namespace Claim.Application.Mappings
     {
         public ClaimMappings()
         {
+            CreateMap<ClaimDetailList,GetClaimResponseList>().ReverseMap();
             CreateMap<AddClaimRequest, AddClaimCommand>().ReverseMap();
             CreateMap<ClaimDetail,AddClaimCommand>().ReverseMap();
             CreateMap<ClaimDetail,AddClaimResponse>().ReverseMap();
+            CreateMap<ClaimDetail,GetClaimResponse>().ReverseMap();
         }
     }
 }

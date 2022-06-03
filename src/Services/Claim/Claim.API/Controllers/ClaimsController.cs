@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Claim.Application.Features.AddClaim;
+using Claim.Application.Features.GetClaim;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,9 +25,16 @@ namespace Claim.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok("This is claims service");
+            return Ok(await _mediatr.Send(new GetClaimQuery()));
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetClaim(int id)
+        {
+            return Ok(await _mediatr.Send(new GetClaimQuery() { Id = id }));
         }
 
         [HttpPost]

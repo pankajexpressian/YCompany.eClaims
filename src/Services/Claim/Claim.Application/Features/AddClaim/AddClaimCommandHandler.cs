@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Claim.Application.Exceptions;
 using Claim.Domain.Entities;
 using Claim.Infrastructure.Repositories;
 using MediatR;
@@ -24,8 +25,7 @@ namespace Claim.Application.Features.AddClaim
 
             if (res == null || res.Id <= 0)
             {
-                //Throw error here
-                throw new System.NotImplementedException();
+                throw new ClaimNotSavedException("Something went wrong. Please try again later.");
             }
 
             var response = _mapper.Map<AddClaimResponse>(res);
