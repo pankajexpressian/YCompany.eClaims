@@ -1,0 +1,17 @@
+﻿@page
+@model eClaims.Web.Pages.Policy.IndexModel
+@{
+    ViewData["Title"] = "Search Policy";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<h1>Find Policy</h1>
+<div class="align-content-center">
+    <form method="post">
+        <input type="text" name="PolicyNumber" asp-for="PolicyNumber" />
+        <button type="submit">Post</button>
+    </form>
+</div>

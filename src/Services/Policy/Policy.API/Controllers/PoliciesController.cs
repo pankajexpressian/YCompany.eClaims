@@ -38,18 +38,19 @@ namespace Policy.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ApiResponse> GetPolicies()
+        public async Task<IActionResult> GetPolicies()
         {
             var policies = await _policyService.GetPolicies();
-            if (policies != null)
-                return BuildResponse(ApiResponseConstants.SuccessStatusCode,
-                    ApiResponseConstants.SuccessStatus,
-                    String.Empty,
-                    policies);
+            return Ok(policies);
+            //if (policies != null)
+            //    return BuildResponse(ApiResponseConstants.SuccessStatusCode,
+            //        ApiResponseConstants.SuccessStatus,
+            //        String.Empty,
+            //        policies);
 
-            return BuildResponse(ApiResponseConstants.NotFoundStatusCode,
-                ApiResponseConstants.SuccessStatus,
-                "No policies found");
+            //return BuildResponse(ApiResponseConstants.NotFoundStatusCode,
+            //    ApiResponseConstants.SuccessStatus,
+            //    "No policies found");
         }
         #endregion
 
@@ -146,21 +147,21 @@ namespace Policy.API.Controllers
         }
         #endregion
 
-        private ApiResponse BuildResponse(string statusCode, string status, string message, dynamic data = null)
-        {
-            var metaData = new ApiResponseMetaData()
-            {
-                Staus = status,
-                StausCode = statusCode,
-                Message = message
-            };
-            var response = new ApiResponse()
-            {
-                Data = data,
-                MetaData = metaData
-            };
+        //private ApiResponse BuildResponse(string statusCode, string status, string message, dynamic data = null)
+        //{
+        //    var metaData = new ApiResponseMetaData()
+        //    {
+        //        Staus = status,
+        //        StausCode = statusCode,
+        //        Message = message
+        //    };
+        //    var response = new ApiResponse()
+        //    {
+        //        Data = data,
+        //        MetaData = metaData
+        //    };
 
-            return response;
-        }
+        //    return response;
+        //}
     }
 }

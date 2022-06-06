@@ -1,0 +1,91 @@
+﻿@page "{policyNumber}"
+@model eClaims.Web.Pages.Policy.SignupModel
+@{
+    ViewData["Title"] = "Signup";
+}
+
+<div>
+    @{
+        if (Model.Policy.SignedUpAlready)
+        {
+            var message = Convert.ToString(ViewData["Message"]);
+            if (!string.IsNullOrEmpty(message))
+            {
+
+                <h1>@message</h1>
+            }
+            else
+            {
+                <h1>You have already signed up. Your customer id is @Model.Policy.CustomerId </h1>
+
+            }
+        }
+        else
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Policy Number
+                    </th>
+                    <th>
+                        Issued On
+                    </th>
+
+                    <th>
+                        Valid Till
+                    </th>
+                </tr>
+                <tr>
+                    <td>@Model.Policy.PolicyNumber</td>
+                    <td>@Model.Policy.IssuedOn</td>
+                    <td>@Model.Policy.ExpiresOn</td>
+                </tr>
+            </table>
+
+            <div>
+                <h3> Please provide the below details to sign up</h3>
+            </div>
+
+            <form method="post">
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            First Name
+                        </th>
+
+                        <th>
+                            Last Name
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            DOB
+                        </th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="FirstName" /></td>
+                        <td><input type="text" name="LastName" /></td>
+                        <td><input type="text" name="Email" /></td>
+                        <td>
+                            <input type="text" name="DOB" />
+                            <input type="hidden" name="PolicyNumber" value=@Model.Policy?.PolicyNumber>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="submit">
+                                Signup
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        }
+    }
+</div>

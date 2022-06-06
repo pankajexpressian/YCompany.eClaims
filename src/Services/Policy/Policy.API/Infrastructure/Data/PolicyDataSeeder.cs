@@ -97,7 +97,7 @@ namespace Policy.API.Infrastructure.Data
             policies.Add(
             new CustomerPolicy()
             {
-                CustomerId = 4,
+                
                 StartsOn = DateTime.Today.AddDays(15),
                 ExpiresOn = DateTime.Today.AddDays(365),
                 IssuedOn = DateTime.Today,

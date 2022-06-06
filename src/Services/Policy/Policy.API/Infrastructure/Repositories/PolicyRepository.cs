@@ -87,7 +87,7 @@ namespace Policy.API.Infrastructure.Repositories
             {
                 //existingPolicy.CreatedAt = existingPolicy.CreatedAt;
                 existingPolicy.CustomerId = customerPolicy.CustomerId;
-                existingPolicy.SignedUpAlready = customerPolicy.SignedUpAlready;
+                existingPolicy.SignedUpAlready = true;
                 existingPolicy.DOB = customerPolicy.DOB;
 
                 if (_dbContext.Entry(existingPolicy).State != EntityState.Modified)

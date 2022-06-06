@@ -23,9 +23,31 @@ namespace eClaims.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddHttpClient<IPolicyService, PolicyService>(config =>
+            //config.BaseAddress = new Uri(Configuration["GatewaySettings:BaseAddress"])
+            //);
+
             services.AddHttpClient<PolicyService>(config =>
+           config.BaseAddress = new Uri(Configuration["GatewaySettings:BaseAddress"])
+           );
+
+            services.AddHttpClient<IClaimService, ClaimService>(config =>
             config.BaseAddress = new Uri(Configuration["GatewaySettings:BaseAddress"])
-            ); ;
+            );
+
+            services.AddHttpClient<IDocumentService, DocumentService>(config =>
+            config.BaseAddress = new Uri(Configuration["GatewaySettings:BaseAddress"])
+            );
+
+            services.AddHttpClient<ICustomerService, CustomerService>(config =>
+            config.BaseAddress = new Uri(Configuration["GatewaySettings:BaseAddress"])
+            );
+
+            services.AddHttpClient<INotificationService, NotificationService>(config =>
+           config.BaseAddress = new Uri(Configuration["GatewaySettings:BaseAddress"])
+           );
+
+
             services.AddRazorPages();
         }
 

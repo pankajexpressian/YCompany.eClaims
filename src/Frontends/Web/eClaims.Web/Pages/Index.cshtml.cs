@@ -12,17 +12,19 @@ namespace eClaims.Web.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly PolicyService apiGatewayClient;
 
-        public IndexModel(ILogger<IndexModel> logger, PolicyService apiGatewayClient)
+        public int PolicyNumber { get; set; }
+
+        public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
-            this.apiGatewayClient = apiGatewayClient;
+           
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
+            return Page();
         }
+
     }
 }
